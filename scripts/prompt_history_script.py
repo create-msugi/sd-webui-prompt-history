@@ -64,6 +64,11 @@ def add_config(id: str, name: str, model: str, info_text: str, img) -> history.H
     # shorten name
     original_prompt = h.name
     h.name = h.name[:64]
+    # remove prompts
+    end_prompt = info_text.find("\nNegative prompt: ")
+    if end_prompt == -1:
+        end_prompt = info_text.find("\nSteps: ")
+    info_text = info_text[end_prompt:]
     # replace default prompts
     info_texts = info_text.splitlines(True) 
     info_texts[0] = original_prompt + '\n'
